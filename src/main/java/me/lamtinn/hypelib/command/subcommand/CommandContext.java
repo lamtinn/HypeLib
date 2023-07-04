@@ -153,7 +153,8 @@ public final class CommandContext implements HCommandContext {
 
     @Override
     public boolean hasPermission(@NotNull String perm) {
-        if (!(sender instanceof Player player)) return true;
+        if (!(sender instanceof Player)) return true;
+        Player player = (Player) sender;
         return player.isOp() || player.hasPermission("*") || player.hasPermission(perm);
     }
 

@@ -1,6 +1,6 @@
 package me.lamtinn.hypelib.command.subcommand;
 
-import me.lamtinn.hypelib.command.annotations.Command;
+import me.lamtinn.hypelib.command.annotation.Command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public abstract class SubCommand {
 
-    private String permission, usage;
+    private String permission = "", usage = "/none";
 
     public abstract void onCommand(@NotNull final CommandContext context) throws IOException;
 

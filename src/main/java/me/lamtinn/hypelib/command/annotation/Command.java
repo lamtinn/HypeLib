@@ -1,4 +1,4 @@
-package me.lamtinn.hypelib.command.annotations;
+package me.lamtinn.hypelib.command.annotation;
 
 import me.lamtinn.hypelib.command.CommandTarget;
 

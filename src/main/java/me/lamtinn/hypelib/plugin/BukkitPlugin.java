@@ -1,6 +1,5 @@
 package me.lamtinn.hypelib.plugin;
 
-import me.lamtinn.hypelib.command.CommandManager;
 import me.lamtinn.hypelib.menu.MenuListener;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
@@ -33,6 +32,8 @@ public class BukkitPlugin extends JavaPlugin {
 
         this.registerListener(new MenuListener());
         this.enabledFunctions.forEach(Runnable::run);
+
+        this.postEnable();
     }
 
     @Override

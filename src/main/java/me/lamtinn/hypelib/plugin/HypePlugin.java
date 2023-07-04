@@ -1,8 +1,12 @@
 package me.lamtinn.hypelib.plugin;
 
 import me.lamtinn.hypelib.command.CommandManager;
+import me.lamtinn.hypelib.config.ConfigFile;
+import me.lamtinn.hypelib.config.ConfigManager;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.command.Command;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.ServicePriority;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -12,6 +16,7 @@ public class HypePlugin extends BukkitPlugin {
     public static BukkitAudiences adventure;
 
     private final CommandManager commandManager = new CommandManager(this);
+    private final ConfigManager configManager = new ConfigManager(this);
 
     public HypePlugin() {
         super();
@@ -19,26 +24,70 @@ public class HypePlugin extends BukkitPlugin {
 
     @Override
     public final void onLoad() {
-        super.onLoad();
         plugin = this;
+        super.onLoad();
     }
 
     @Override
     public final void onEnable() {
-        super.onEnable();
         adventure = BukkitAudiences.create(this);
+        super.onEnable();
+
         this.addEnabledFunction(CommandManager::syncCommand);
     }
 
     @Override
     public final void onDisable() {
         super.onDisable();
+
         commandManager.unregisterAll();
+
+        configManager.save();
+        configManager.unregisterAll();
+
         plugin = null;
+        if (adventure != null) {
+            adventure.close();
+            adventure = null;
+        }
+    }
+
+    public void disable() {
+        this.getPluginLoader().disablePlugin(this);
     }
 
     public void registerCommand(@NotNull final Command command) {
         commandManager.register(command);
+    }
+
+    public void registerConfig(@NotNull final ConfigFile configFile, @NotNull final String name) {
+        this.reloadConfig();
+
+        configFile.create();
+        configFile.getConfig().options().copyDefaults();
+        configFile.save();
+
+        this.saveDefaultConfig();
+        this.configManager.register(configFile, name);
+    }
+
+    public void registerConfig(@NotNull final ConfigFile configFile, @NotNull final String ... names) {
+        this.reloadConfig();
+
+        configFile.create();
+        configFile.getConfig().options().copyDefaults();
+        configFile.save();
+
+        this.saveDefaultConfig();
+        this.configManager.register(configFile, names);
+    }
+
+    public <T> void registerProvider(Class<T> service, T provider) {
+        this.getServer().getServicesManager().register(service, provider, this, ServicePriority.Normal);
+    }
+
+    public <T> void registerProvider(Class<T> service, T provider, ServicePriority priority) {
+        this.getServer().getServicesManager().register(service, provider, this, priority);
     }
 
     public @Nullable Command getRegisteredCommand(String label) {
@@ -46,7 +95,15 @@ public class HypePlugin extends BukkitPlugin {
         return command != null ? command : getCommand(label);
     }
 
+    public @Nullable FileConfiguration getConfig(String label) {
+        return this.configManager.get(label);
+    }
+
     public @NotNull CommandManager getCommandManager() {
         return this.commandManager;
+    }
+
+    public @NotNull ConfigManager getConfigManager() {
+        return this.configManager;
     }
 }

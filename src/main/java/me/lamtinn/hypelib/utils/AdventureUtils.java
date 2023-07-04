@@ -1,6 +1,5 @@
 package me.lamtinn.hypelib.utils;
 
-import net.kyori.adventure.builder.AbstractBuilder;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.lamtinn.hypelib.plugin.HypePlugin;
 import net.kyori.adventure.audience.Audience;
@@ -18,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -41,6 +41,14 @@ public class AdventureUtils {
     public static void sendMessage(CommandSender sender, String s) {
         if (sender instanceof Player) playerMessage((Player) sender, s);
         else consoleMessage(s);
+    }
+
+    public static void sendMessage(CommandSender sender, List<String> msgs) {
+        msgs.forEach(msg -> sendMessage(sender, msg));
+    }
+
+    public static void sendMessage(CommandSender sender, String ... msgs) {
+        Arrays.stream(msgs).forEach(msg -> sendMessage(sender, msg));
     }
 
     public static void consoleMessage(String message) {
