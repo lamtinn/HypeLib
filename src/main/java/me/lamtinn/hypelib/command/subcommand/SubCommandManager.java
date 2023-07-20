@@ -16,6 +16,7 @@ import java.util.function.Consumer;
 public class SubCommandManager implements HSubCommandManager {
 
     protected static final String HELP = "help";
+    protected static String HELP_PERM = "";
     private final Map<String, SubCommand> subcommands = new HashMap<>();
 
     private Consumer<CommandSender> onHelp = (sender -> {});
@@ -29,7 +30,9 @@ public class SubCommandManager implements HSubCommandManager {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull String label, @NotNull String[] args) {
         if (args.length < 1 || args[0].equalsIgnoreCase(HELP)) {
-            this.onHelp.accept(sender);
+            if (sender.hasPermission(HELP_PERM)) {
+                this.onHelp.accept(sender);
+            }
             return true;
         }
 
@@ -82,7 +85,9 @@ public class SubCommandManager implements HSubCommandManager {
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull String[] args) {
         if (args.length == 1) {
             ArrayList<String> tabList = new ArrayList<>();
-            tabList.add(HELP);
+            if (!HELP_PERM.isEmpty() && sender.hasPermission(HELP_PERM)) {
+                tabList.add(HELP);
+            }
             for (SubCommand cmd : this.subcommands.values()) {
                 Command hcmd = cmd.getClass().getAnnotation(Command.class);
                 if (hcmd == null) continue;
@@ -181,6 +186,11 @@ public class SubCommandManager implements HSubCommandManager {
     @Override
     public void unregisterAll() {
         this.subcommands.clear();
+    }
+
+    @Override
+    public void setHelpPerm(@NotNull String perm) {
+        SubCommandManager.HELP_PERM = perm;
     }
 
     @Override

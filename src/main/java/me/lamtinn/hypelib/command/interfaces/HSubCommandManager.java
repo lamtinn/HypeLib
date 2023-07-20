@@ -3,7 +3,6 @@ package me.lamtinn.hypelib.command.interfaces;
 import me.lamtinn.hypelib.command.subcommand.SubCommand;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.checkerframework.checker.units.qual.N;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -35,6 +34,8 @@ public interface HSubCommandManager {
     void unregister(@NotNull final SubCommand subCommand);
 
     void unregisterAll();
+
+    void setHelpPerm(@NotNull final String perm);
 
     Map<String, SubCommand> getSubCommands();
 

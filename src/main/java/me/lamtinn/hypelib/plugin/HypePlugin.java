@@ -3,12 +3,17 @@ package me.lamtinn.hypelib.plugin;
 import me.lamtinn.hypelib.command.CommandManager;
 import me.lamtinn.hypelib.config.ConfigFile;
 import me.lamtinn.hypelib.config.ConfigManager;
+import me.lamtinn.hypelib.task.scheduler.Scheduler;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.command.Command;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.Event;
 import org.bukkit.plugin.ServicePriority;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Arrays;
+import java.util.logging.Level;
 
 public class HypePlugin extends BukkitPlugin {
 
@@ -88,6 +93,20 @@ public class HypePlugin extends BukkitPlugin {
 
     public <T> void registerProvider(Class<T> service, T provider, ServicePriority priority) {
         this.getServer().getServicesManager().register(service, provider, this, priority);
+    }
+
+    public void callEvent(@NotNull final Event event) {
+        Scheduler.plugin(this).sync().runTask(() ->
+                this.getServer().getPluginManager().callEvent(event)
+        );
+    }
+
+    public void log(@NotNull final String msg) {
+        this.getLogger().log(Level.INFO, msg);
+    }
+
+    public void log(@NotNull final String[] msg) {
+        Arrays.stream(msg).forEach(this::log);
     }
 
     public @Nullable Command getRegisteredCommand(String label) {

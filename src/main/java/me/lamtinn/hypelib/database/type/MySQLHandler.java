@@ -38,7 +38,6 @@ public abstract class MySQLHandler extends SQLConnector {
 
         config.setMaxLifetime(TimeUnit.MINUTES.toMinutes(30));
         config.setConnectionTimeout(TimeUnit.SECONDS.toMillis(10));
-        config.setLeakDetectionThreshold(TimeUnit.SECONDS.toMillis(10));
 
         Map<String, String> properties = ImmutableMap.<String, String>builder()
                 .put("useUnicode", "true").put("characterEncoding", "utf8")

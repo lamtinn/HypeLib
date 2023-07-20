@@ -71,6 +71,7 @@ public class AdventureUtils {
     }
 
     public static void playerMessage(Player player, String message) {
+        if (player == null || !player.isOnline()) return;
         if (message == null || message.length() == 0) return;
         Audience au = HypePlugin.adventure.player(player);
         Component parsed = mm.deserialize(parse(player, message.replace("{prefix}", getPrefix())));
@@ -97,6 +98,8 @@ public class AdventureUtils {
     }
 
     public static void playerSound(Player player, String soundPath) {
+        if (player == null || !player.isOnline()) return;
+
         Sound sound;
         float volume = 1.0f, pitch = 1.0f;
 
@@ -134,6 +137,7 @@ public class AdventureUtils {
     }
 
     public static void playerActionbar(Player player, String message) {
+        if (player == null || !player.isOnline()) return;
         if (message == null || message.length() == 0) return;
         Audience au = HypePlugin.adventure.player(player);
         Component parsed = mm.deserialize(parse(player, message.replace("{prefix}", getPrefix())));
@@ -141,6 +145,7 @@ public class AdventureUtils {
     }
 
     public static void playerTitle(Player player, ConfigurationSection config) {
+        if (player == null || !player.isOnline()) return;
         if (config.getString("text") == null) return;
         Audience au = HypePlugin.adventure.player(player);
         Title.Times times = Title.Times.times(
@@ -165,6 +170,7 @@ public class AdventureUtils {
     }
 
     public static void playerTitle(Player player, String title, String sub, int in, int time, int out) {
+        if (player == null || !player.isOnline()) return;
         if (title == null) return;
         Audience au = HypePlugin.adventure.player(player);
         Title.Times times = Title.Times.times(
@@ -186,6 +192,7 @@ public class AdventureUtils {
     }
 
     public static void playerBossBar(Player player, String text, float progress, BossBar.Color color, BossBar.Overlay overlay) {
+        if (player == null || !player.isOnline()) return;
         if (text == null) return;
         text = parse(player, text.replace("{prefix}", getPrefix()));
 

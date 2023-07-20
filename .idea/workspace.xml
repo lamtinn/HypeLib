@@ -4,19 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8d3da899-2539-465a-b326-142647f39815" name="Changes" comment="Update pom.xml">
+    <list default="true" id="8d3da899-2539-465a-b326-142647f39815" name="Changes" comment="Update++">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/command/annotations/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/command/annotation/Command.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/command/annotations/package-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/command/annotation/package-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/command/subcommand/CommandContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/command/subcommand/CommandContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/command/subcommand/SubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/command/subcommand/SubCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/command/interfaces/HSubCommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/command/interfaces/HSubCommandManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/command/subcommand/SubCommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/command/subcommand/SubCommandManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/menu/MenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/menu/MenuListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/plugin/BukkitPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/plugin/BukkitPlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/database/connector/impl/SQLConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/database/connector/impl/SQLConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/database/type/MySQLHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/database/type/MySQLHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/plugin/HypePlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/plugin/HypePlugin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/utils/AdventureUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/utils/AdventureUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/utils/PluginUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/utils/PluginUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/utils/VersionUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/utils/VersionUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,11 +127,19 @@
       <option name="project" value="LOCAL" />
       <updated>1687458765189</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Update++">
+      <created>1688487355704</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1688487355704</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Update pom.xml" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update pom.xml" />
+    <MESSAGE value="Update++" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update++" />
   </component>
 </project>

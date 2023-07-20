@@ -6,10 +6,10 @@
 
     <groupId>me.lamtinn</groupId>
     <artifactId>hypelib</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
 
     <name>HypeLib</name>
-    <description>Java library of OpTic Studio projects.</description>
+    <description>Java library of OpTic Studio (now my personal) projects.</description>
 
     <issueManagement>
         <system>github</system>

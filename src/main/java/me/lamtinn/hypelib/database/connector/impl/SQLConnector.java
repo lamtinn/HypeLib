@@ -77,12 +77,12 @@ public abstract class SQLConnector implements Connector {
 
     public ResultSet query(@NotNull final String query) {
         try {
-            Statement statement = this.getConnection().createStatement();
+            Statement statement = this.connection.createStatement();
             if (statement.execute(query)) {
                 return statement.getResultSet();
             }
             int i = statement.getUpdateCount();
-            return this.getConnection().createStatement().executeQuery("SELECT " + i);
+            return this.connection.createStatement().executeQuery("SELECT " + i);
         } catch (SQLException e) {
             AdventureUtils.consoleMessage("{prefix} <gray>Failed to execute query(): <#FF416C>" + e.getMessage());
             return null;
@@ -91,7 +91,7 @@ public abstract class SQLConnector implements Connector {
 
     public int update(@NotNull final String query) {
         try {
-            return this.getConnection().createStatement().executeUpdate(query);
+            return this.connection.createStatement().executeUpdate(query);
         } catch (SQLException e) {
             AdventureUtils.consoleMessage("{prefix} <gray>Failed to execute update(): <#FF416C>" + e.getMessage());
             return -1;
@@ -100,10 +100,21 @@ public abstract class SQLConnector implements Connector {
 
     public PreparedStatement prepare(@NotNull final String param) {
         try {
-            return this.getConnection().prepareStatement(param);
+            return this.connection.prepareStatement(param);
         } catch (SQLException e) {
             AdventureUtils.consoleMessage("{prefix} <gray>Failed to execute prepare(): <#FF416C>" + e.getMessage());
             return null;
+        }
+    }
+
+    public boolean isTableExists(@NotNull final String table) {
+        try {
+            DatabaseMetaData metaData = this.connection.getMetaData();
+            try (ResultSet tables = metaData.getTables(null, null, table, null)) {
+                return tables.next();
+            }
+        } catch (SQLException e) {
+            return false;
         }
     }
 }
