@@ -4,16 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8d3da899-2539-465a-b326-142647f39815" name="Changes" comment="Update++">
+    <list default="true" id="8d3da899-2539-465a-b326-142647f39815" name="Changes" comment="Update v1.0.6">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/command/interfaces/HSubCommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/command/interfaces/HSubCommandManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/command/subcommand/SubCommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/command/subcommand/SubCommandManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/database/connector/impl/SQLConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/database/connector/impl/SQLConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/database/type/MySQLHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/database/type/MySQLHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/hook/Hook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/hook/Hook.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/hook/HypeExpansion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/hook/HypeExpansion.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/plugin/HypePlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/plugin/HypePlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/utils/AdventureUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/utils/AdventureUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/utils/PluginUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/utils/PluginUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/utils/VersionUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/utils/VersionUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +22,7 @@
       <list>
         <option value="Interface" />
         <option value="package-info" />
+        <option value="AnnotationType" />
         <option value="Class" />
       </list>
     </option>
@@ -56,7 +54,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;F:/Project/ngola/IntelliJ IDEA&quot;,
     &quot;onboarding.tips.debug.path&quot;: &quot;F:/Project/ngola/IntelliJ IDEA/HypeLib/src/main/java/me/lamtinn/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.appearance&quot;
@@ -134,12 +132,20 @@
       <option name="project" value="LOCAL" />
       <updated>1688487355704</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Update v1.0.6">
+      <created>1689872180248</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1689872180248</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Update pom.xml" />
     <MESSAGE value="Update++" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update++" />
+    <MESSAGE value="Update v1.0.6" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update v1.0.6" />
   </component>
 </project>

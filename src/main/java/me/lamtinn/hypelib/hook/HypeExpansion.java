@@ -6,6 +6,7 @@ import me.lamtinn.hypelib.utils.PluginUtils;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+@Plugin("PlaceholderAPI")
 public abstract class HypeExpansion extends PlaceholderExpansion implements Hook {
 
     protected final HypePlugin plugin;
@@ -25,7 +26,7 @@ public abstract class HypeExpansion extends PlaceholderExpansion implements Hook
 
     @Override
     public @NotNull String getAuthor() {
-        return "LamTinn";
+        return "[lamtinn, LamTinn]";
     }
 
     @Override
@@ -48,10 +49,5 @@ public abstract class HypeExpansion extends PlaceholderExpansion implements Hook
     public void run() {
         print("Hooked onto PlaceholderAPI " + PluginUtils.getPluginVer("PlaceholderAPI"));
         this.register();
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return this.plugin.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null;
     }
 }

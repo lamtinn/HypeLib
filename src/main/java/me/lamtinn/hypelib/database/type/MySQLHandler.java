@@ -9,6 +9,7 @@ import me.lamtinn.hypelib.database.connector.impl.SQLConnector;
 import me.lamtinn.hypelib.utils.AdventureUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -58,6 +59,21 @@ public abstract class MySQLHandler extends SQLConnector {
         this.connection = dataSource.getConnection();
 
         AdventureUtils.consoleMessage("{prefix} <green>Successfully connected to MySQL database!");
+    }
+
+    @Override
+    public void disconnect() {
+        if (!isConnected()) return;
+        try {
+            this.connection.close();
+
+            if (dataSource != null && !dataSource.isClosed()) {
+                dataSource.close();
+            }
+            AdventureUtils.consoleMessage("{prefix} <gray>Connection to <#FDC830>" + getType() + " <gray>database has been closed!");
+        } catch (SQLException e) {
+            AdventureUtils.consoleMessage("{prefix} <gray>The database could not be closed: <#FF416C>" + e.getMessage());
+        }
     }
 
     public @NotNull HikariDataSource getDataSource() {
