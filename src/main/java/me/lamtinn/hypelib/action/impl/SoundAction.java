@@ -11,7 +11,7 @@ public class SoundAction extends Action {
 
     @Override
     public @NotNull Set<String> getIdentifiers() {
-        return this.convert("{sound}");
+        return this.convert("sound");
     }
 
     @Override

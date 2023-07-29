@@ -13,7 +13,7 @@ public class ChatAction extends Action {
 
     @Override
     public @NotNull Set<String> getIdentifiers() {
-        return this.convert("{chat}");
+        return this.convert("chat");
     }
 
     @Override

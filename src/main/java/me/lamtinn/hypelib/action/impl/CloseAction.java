@@ -13,7 +13,7 @@ public class CloseAction extends Action {
 
     @Override
     public @NotNull Set<String> getIdentifiers() {
-        return this.convert("{close}");
+        return this.convert("close");
     }
 
     @Override

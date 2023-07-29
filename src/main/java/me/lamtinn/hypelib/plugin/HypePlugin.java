@@ -8,6 +8,7 @@ import me.lamtinn.hypelib.config.ConfigManager;
 import me.lamtinn.hypelib.task.scheduler.Scheduler;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Event;
@@ -138,6 +139,10 @@ public class HypePlugin extends BukkitPlugin {
         return Collections.singletonList(getClass());
     }
 
+    public NamespacedKey key(@NotNull final String key) {
+        return new NamespacedKey(this, key);
+    }
+
     public void callEvent(@NotNull final Event event) {
         Scheduler.plugin(this).sync().runTask(() ->
                 this.getServer().getPluginManager().callEvent(event)
@@ -167,5 +172,9 @@ public class HypePlugin extends BukkitPlugin {
 
     public @NotNull ConfigManager getConfigManager() {
         return this.configManager;
+    }
+
+    public @NotNull ActionManager getActionManager() {
+        return this.actionManager;
     }
 }

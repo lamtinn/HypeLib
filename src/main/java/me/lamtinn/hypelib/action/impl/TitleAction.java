@@ -11,7 +11,7 @@ public class TitleAction extends Action {
 
     @Override
     public @NotNull Set<String> getIdentifiers() {
-        return this.convert("{title}");
+        return this.convert("title");
     }
 
     @Override

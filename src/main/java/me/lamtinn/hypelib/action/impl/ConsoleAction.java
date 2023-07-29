@@ -11,7 +11,7 @@ public class ConsoleAction extends Action {
 
     @Override
     public @NotNull Set<String> getIdentifiers() {
-        return this.convert("{console}");
+        return this.convert("console");
     }
 
     @Override

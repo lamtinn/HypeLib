@@ -11,7 +11,7 @@ public class MessageAction extends Action {
 
     @Override
     public @NotNull Set<String> getIdentifiers() {
-        return this.convert("{message}", "{msg}");
+        return this.convert("message", "msg");
     }
 
     @Override

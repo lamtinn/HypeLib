@@ -11,7 +11,7 @@ public class ActionbarAction extends Action {
 
     @Override
     public @NotNull Set<String> getIdentifiers() {
-        return this.convert("{actionbar}", "{ab}");
+        return this.convert("actionbar", "ab");
     }
 
     @Override

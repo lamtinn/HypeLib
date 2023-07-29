@@ -4,13 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8d3da899-2539-465a-b326-142647f39815" name="Changes" comment="Update v1.0.6">
+    <list default="true" id="8d3da899-2539-465a-b326-142647f39815" name="Changes" comment="Update v1.0.7">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/database/type/MySQLHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/database/type/MySQLHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/hook/Hook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/hook/Hook.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/hook/HypeExpansion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/hook/HypeExpansion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/action/ActionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/action/ActionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/action/impl/ActionbarAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/action/impl/ActionbarAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/action/impl/BossbarAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/action/impl/BossbarAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/action/impl/BroadcastAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/action/impl/BroadcastAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/action/impl/ChatAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/action/impl/ChatAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/action/impl/CloseAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/action/impl/CloseAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/action/impl/ConsoleAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/action/impl/ConsoleAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/action/impl/MessageAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/action/impl/MessageAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/action/impl/PlayerAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/action/impl/PlayerAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/action/impl/SoundAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/action/impl/SoundAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/action/impl/TitleAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/action/impl/TitleAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/object/PlayerObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/object/PlayerObject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/plugin/HypePlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/plugin/HypePlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/utils/ValueUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/utils/ValueUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,13 +149,21 @@
       <option name="project" value="LOCAL" />
       <updated>1689872180248</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Update v1.0.7">
+      <created>1690467649002</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1690467649002</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Update pom.xml" />
     <MESSAGE value="Update++" />
     <MESSAGE value="Update v1.0.6" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update v1.0.6" />
+    <MESSAGE value="Update v1.0.7" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update v1.0.7" />
   </component>
 </project>

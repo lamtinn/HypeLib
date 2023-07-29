@@ -10,7 +10,7 @@ public class PlayerAction extends Action {
 
     @Override
     public @NotNull Set<String> getIdentifiers() {
-        return this.convert("{player}", "{p}");
+        return this.convert("player", "p");
     }
 
     @Override

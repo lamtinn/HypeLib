@@ -12,7 +12,7 @@ public class BossbarAction extends Action {
 
     @Override
     public @NotNull Set<String> getIdentifiers() {
-        return this.convert("{bossbar}", "{bb}");
+        return this.convert("bossbar", "bb");
     }
 
     @Override

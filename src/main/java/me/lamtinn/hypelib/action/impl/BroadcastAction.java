@@ -11,7 +11,7 @@ public class BroadcastAction extends Action {
 
     @Override
     public @NotNull Set<String> getIdentifiers() {
-        return this.convert("{broadcast}", "{bc}");
+        return this.convert("broadcast", "bc");
     }
 
     @Override
