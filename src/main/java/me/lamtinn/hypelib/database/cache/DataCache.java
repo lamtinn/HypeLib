@@ -17,5 +17,7 @@ public interface DataCache<K, V> {
 
     @NotNull Collection<V> getAll();
 
+    @NotNull Collection<K> getKeys();
+
     @NotNull Map<K, V> getMap();
 }
