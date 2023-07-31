@@ -52,8 +52,8 @@ public class BaseheadGenerate extends ItemGenerate {
     }
 
     @Override
-    public ItemStack setMeta(@NotNull ItemBuilder builder) {
-        builder.metaModify((SkullMeta meta) -> {
+    public ItemBuilder setMeta(@NotNull ItemBuilder builder) {
+        return builder.metaModify((SkullMeta meta) -> {
             meta.displayName(
                     AdventureUtils.toComponent(
                             builder.parse(builder.getName())
@@ -68,7 +68,6 @@ public class BaseheadGenerate extends ItemGenerate {
                 meta.lore(lore);
             }
         });
-        return builder.getItemStack();
     }
 
     private GameProfile getGameProfile(@NotNull final String base64) {

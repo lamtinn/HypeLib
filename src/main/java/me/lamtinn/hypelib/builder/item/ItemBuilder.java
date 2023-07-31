@@ -2,8 +2,9 @@ package me.lamtinn.hypelib.builder.item;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.lamtinn.hypelib.plugin.HypePlugin;
+import me.lamtinn.hypelib.utils.AdventureUtils;
 import me.lamtinn.hypelib.utils.ItemUtils;
-import org.bukkit.Bukkit;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
@@ -16,6 +17,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -32,22 +34,27 @@ public class ItemBuilder {
         );
     }
 
-    private final ItemGenerate generate;
+    private final Player player;
 
-    private Player player;
-    private ItemStack itemStack;
+    private final ItemGenerate generate;
+    private final ItemStack itemStack;
 
     private String name = " ";
     private List<String> lore = Collections.emptyList();
 
-    public ItemBuilder(@NotNull final ConfigurationSection section) {
-        String material = section.getString("material", "DIRT").toLowerCase();
-        this.generate = ItemBuilder.materials.getOrDefault(material, null);
+    public ItemBuilder(@NotNull final Player player, @NotNull final ConfigurationSection section) {
+        this.player = player;
+        this.generate = ItemBuilder.materials.getOrDefault(
+                section.getString("material", "DIRT").toLowerCase(),
+                null
+        );
 
         if (generate != null) {
             this.itemStack = generate.generate(this.player, section);
         } else {
-            Material mate = Material.getMaterial(material.toUpperCase());
+            Material mate = Material.getMaterial(
+                    section.getString("material", "DIRT").toUpperCase()
+            );
             this.itemStack = new ItemStack(mate == null ? Material.DIRT : mate);
         }
 
@@ -73,16 +80,6 @@ public class ItemBuilder {
             List<ItemFlag> flags = ItemUtils.convertFlags(section.getStringList("flags"));
             this.setFlags(flags);
         }
-    }
-
-    public ItemBuilder setPlayer(@NotNull final Player player) {
-        this.player = player;
-        return this;
-    }
-
-    public ItemBuilder setPlayer(@NotNull final UUID uuid) {
-        this.player = Bukkit.getPlayer(uuid);
-        return this;
     }
 
     public ItemBuilder setName(@NotNull final String name) {
@@ -313,6 +310,10 @@ public class ItemBuilder {
         return this.player;
     }
 
+    public @Nullable ItemGenerate getGenerate() {
+        return this.generate;
+    }
+
     public ItemStack getItemStack() {
         return this.itemStack;
     }
@@ -334,7 +335,24 @@ public class ItemBuilder {
     }
 
     public ItemStack build() {
-        this.itemStack = this.generate.setMeta(this);
+        if (this.generate != null) {
+            this.generate.setMeta(this);
+        } else {
+            this.metaModify(meta -> {
+                meta.displayName(AdventureUtils.toComponent(
+                        this.parse(this.getName())
+                ));
+                if (!this.lore.isEmpty()) {
+                    List<Component> lores = new ArrayList<>();
+                    this.lore.forEach(l -> lores.add(
+                            AdventureUtils.toComponent(
+                                    this.parse(l)
+                            ))
+                    );
+                    meta.lore(lores);
+                }
+            });
+        }
         return this.itemStack.clone();
     }
 }

@@ -16,8 +16,8 @@ public abstract class ItemGenerate {
 
     public abstract ItemStack generate(@NotNull final Player player, @NotNull final ConfigurationSection section);
 
-    public ItemStack setMeta(@NotNull final ItemBuilder builder) {
-        builder.metaModify(meta -> {
+    public ItemBuilder setMeta(@NotNull final ItemBuilder builder) {
+        return builder.metaModify(meta -> {
             meta.displayName(
                     AdventureUtils.toComponent(
                             builder.parse(builder.getName())
@@ -32,6 +32,5 @@ public abstract class ItemGenerate {
                 meta.lore(lore);
             }
         });
-        return builder.getItemStack();
     }
 }
