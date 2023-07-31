@@ -1,6 +1,8 @@
 package me.lamtinn.hypelib.builder.item;
 
 import me.clip.placeholderapi.PlaceholderAPI;
+import me.lamtinn.hypelib.builder.item.impl.BaseheadGenerate;
+import me.lamtinn.hypelib.builder.item.impl.HeadGenerate;
 import me.lamtinn.hypelib.plugin.HypePlugin;
 import me.lamtinn.hypelib.utils.AdventureUtils;
 import me.lamtinn.hypelib.utils.ItemUtils;
@@ -21,9 +23,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-public class ItemBuilder {
+public abstract class ItemBuilder {
 
     private static final Map<String, ItemGenerate> materials = new HashMap<>();
 
@@ -34,20 +37,32 @@ public class ItemBuilder {
         );
     }
 
-    private final Player player;
+    public static void register(@NotNull final Supplier<ItemGenerate> supplier) {
+        ItemGenerate generate1 = supplier.get();
+        ItemBuilder.materials.put(
+                generate1.getType().toLowerCase(),
+                generate1
+        );
+    }
 
-    private final ItemGenerate generate;
+    private final Player player;
     private final ItemStack itemStack;
+
+    private ItemGenerate generate = null;
 
     private String name = " ";
     private List<String> lore = Collections.emptyList();
 
     public ItemBuilder(@NotNull final Player player, @NotNull final ConfigurationSection section) {
         this.player = player;
-        this.generate = ItemBuilder.materials.getOrDefault(
-                section.getString("material", "DIRT").toLowerCase(),
-                null
-        );
+
+        String material = section.getString("material", "DIRT");
+        if (material.contains("-")) {
+            this.generate = ItemBuilder.materials.getOrDefault(
+                    material.split("-")[0].toLowerCase(),
+                    null
+            );
+        }
 
         if (generate != null) {
             this.itemStack = generate.generate(this.player, section);
@@ -354,5 +369,10 @@ public class ItemBuilder {
             });
         }
         return this.itemStack.clone();
+    }
+
+    static {
+        register(BaseheadGenerate::new);
+        register(HeadGenerate::new);
     }
 }

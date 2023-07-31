@@ -2,6 +2,7 @@ package me.lamtinn.hypelib.command.subcommand;
 
 import me.lamtinn.hypelib.command.annotation.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,6 +31,10 @@ public abstract class SubCommand {
 
     public void setPermission(@NotNull final String permission) {
         this.permission = permission;
+    }
+
+    public void setPermission(@NotNull final Permission permission) {
+        this.permission = permission.getName();
     }
 
     public void setUsage(@NotNull final String usage) {

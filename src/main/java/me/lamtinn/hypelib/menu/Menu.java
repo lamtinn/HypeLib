@@ -8,6 +8,7 @@ import me.lamtinn.hypelib.menu.events.MenuOpenEvent;
 import me.lamtinn.hypelib.menu.interfaces.HButton;
 import me.lamtinn.hypelib.menu.interfaces.HMenu;
 import me.lamtinn.hypelib.utils.AdventureUtils;
+import me.lamtinn.hypelib.utils.PluginUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -15,9 +16,11 @@ import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
+import java.util.stream.IntStream;
 
 public abstract class Menu extends HMenu implements InventoryHolder {
 
@@ -205,5 +208,26 @@ public abstract class Menu extends HMenu implements InventoryHolder {
 
     public void playerSound(String sound) {
         AdventureUtils.playerSound(this.player.getPlayer(), sound);
+    }
+
+    public int[] getSlots(final List<String> slots) {
+        return slots.stream()
+                .flatMapToInt(input -> {
+                    if (input.contains("-") && input.split("-", 2).length == 2) {
+                        String[] parts = input.split("-", 2);
+                        int start = PluginUtils.isInteger(parts[0]);
+                        int end = PluginUtils.isInteger(parts[1]);
+                        if (start != -1 && end != -1 && start <= end && end <= this.slots()) {
+                            return IntStream.rangeClosed(start, end);
+                        }
+                    } else {
+                        int i = PluginUtils.isInteger(input);
+                        if (i != -1 && i <= this.slots()) {
+                            return IntStream.of(i);
+                        }
+                    }
+                    return IntStream.empty();
+                })
+                .toArray();
     }
 }

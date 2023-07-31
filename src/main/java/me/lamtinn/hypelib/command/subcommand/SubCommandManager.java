@@ -30,7 +30,7 @@ public class SubCommandManager implements HSubCommandManager {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull String label, @NotNull String[] args) {
         if (args.length < 1 || args[0].equalsIgnoreCase(HELP)) {
-            if (sender.hasPermission(HELP_PERM)) {
+            if (HELP_PERM.isEmpty() || sender.hasPermission(HELP_PERM)) {
                 this.onHelp.accept(sender);
             }
             return true;

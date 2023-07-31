@@ -6,6 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="8d3da899-2539-465a-b326-142647f39815" name="Changes" comment="Update v1.0.8">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/builder/item/ItemBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/builder/item/ItemBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/command/subcommand/SubCommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/command/subcommand/SubCommandManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/menu/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/menu/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/menu/interfaces/HButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/menu/interfaces/HButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/menu/models/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/menu/models/Button.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +167,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690687458508</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Update v1.0.8">
+      <created>1690780770550</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1690780770550</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
