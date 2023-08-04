@@ -28,5 +28,5 @@ public interface Config {
 
     void save();
 
-    void reload();
+    void setFile(@NotNull final FileConfiguration file);
 }

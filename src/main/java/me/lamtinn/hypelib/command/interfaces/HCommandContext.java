@@ -2,6 +2,7 @@ package me.lamtinn.hypelib.command.interfaces;
 
 import org.bukkit.entity.Player;
 import org.bukkit.command.CommandSender;
+import org.bukkit.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,6 +52,8 @@ public interface HCommandContext {
     boolean isConsole();
 
     boolean hasPermission(@NotNull String perm);
+
+    boolean hasPermission(@NotNull Permission permission);
 
     boolean hasPermission(final Player player, @NotNull String perm);
 

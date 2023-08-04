@@ -6,7 +6,7 @@
 
     <groupId>me.lamtinn</groupId>
     <artifactId>hypelib</artifactId>
-    <version>1.0.8</version>
+    <version>1.1.0</version>
 
     <name>HypeLib</name>
     <description>Java library of OpTic Studio (now my personal) projects.</description>
@@ -27,6 +27,18 @@
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
     </repositories>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>16</source>
+                    <target>16</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>

@@ -5,7 +5,9 @@ import me.lamtinn.hypelib.builder.item.ItemBuilder;
 import me.lamtinn.hypelib.builder.item.ItemGenerate;
 import me.lamtinn.hypelib.utils.AdventureUtils;
 import me.lamtinn.hypelib.utils.ItemUtils;
+import me.lamtinn.hypelib.utils.ValueUtils;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -21,14 +23,16 @@ public class HeadGenerate extends ItemGenerate {
 
     @Override
     public String getType() {
-        return "head";
+        return "HEAD";
     }
 
     @Override
     public ItemStack generate(@NotNull Player player, @NotNull ConfigurationSection section) {
         final String value = PlaceholderAPI.setPlaceholders(
                 player,
-                section.getString("material").split("-")[1]
+                section.getString("head-owner",
+                        ValueUtils.getRandom(Bukkit.getOnlinePlayers()).getName()
+                )
         );
         ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
 

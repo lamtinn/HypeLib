@@ -6,6 +6,7 @@ import me.lamtinn.hypelib.utils.PlayerUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -156,6 +157,11 @@ public final class CommandContext implements HCommandContext {
         if (!(sender instanceof Player)) return true;
         Player player = (Player) sender;
         return player.isOp() || player.hasPermission("*") || player.hasPermission(perm);
+    }
+
+    @Override
+    public boolean hasPermission(@NotNull Permission permission) {
+        return this.hasPermission(permission.getName());
     }
 
     @Override

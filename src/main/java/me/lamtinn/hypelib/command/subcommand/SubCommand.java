@@ -11,7 +11,22 @@ import java.util.List;
 
 public abstract class SubCommand {
 
-    private String permission = "", usage = "/none";
+    private String permission, usage;
+
+    public SubCommand(@NotNull final Permission permission, @NotNull final String usage) {
+        this.permission = permission.getName();
+        this.usage = usage;
+    }
+
+    public SubCommand(@NotNull final Permission permission) {
+        this.permission = permission.getName();
+        this.usage = "/none";
+    }
+
+    public SubCommand(@NotNull final String usage) {
+        this.usage = usage;
+        this.permission = "";
+    }
 
     public abstract void onCommand(@NotNull final CommandContext context) throws IOException;
 

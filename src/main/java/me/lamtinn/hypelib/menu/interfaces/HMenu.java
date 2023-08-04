@@ -15,9 +15,9 @@ public abstract class HMenu {
 
     public abstract int slots();
 
-    public abstract ClickAction getClickAction();
+    public abstract MenuClick getClick();
 
-    public abstract HMenu setClickAction(@NotNull ClickAction action);
+    public abstract HMenu setClick(@NotNull HMenu.MenuClick action);
 
     public abstract boolean cancelAllClicks();
 
@@ -41,7 +41,7 @@ public abstract class HMenu {
 
     public abstract void close();
 
-    public enum ClickAction {
+    public enum MenuClick {
         TOP, BOTTOM, BOTH;
     }
 }

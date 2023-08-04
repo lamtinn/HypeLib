@@ -2,9 +2,12 @@ package me.lamtinn.hypelib.config;
 
 import me.lamtinn.hypelib.plugin.HypePlugin;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -26,9 +29,7 @@ public final class ConfigManager {
     }
 
     public void register(@NotNull final ConfigFile configFile, final String name) {
-        if (!this.configs.containsKey(name)) {
-            this.configs.put(name, configFile);
-        }
+        this.configs.put(name, configFile);
     }
 
     public void unregister(@NotNull final String name) {
@@ -44,11 +45,30 @@ public final class ConfigManager {
     }
 
     public void reload() {
-        this.getAll().forEach(ConfigFile::reload);
+        final Map<String, ConfigFile> newConfigs = new HashMap<>(this.configs);
+        this.configs.clear();
+
+        for (final Map.Entry<String, ConfigFile> entry : newConfigs.entrySet()) {
+            ConfigFile configFile = entry.getValue();
+            FileConfiguration yaml = YamlConfiguration.loadConfiguration(configFile.getFile());
+
+            InputStream inputStream = this.plugin.getResource(configFile.getFilePath());
+            if (inputStream != null) {
+                YamlConfiguration newFile = YamlConfiguration.loadConfiguration(
+                        new InputStreamReader(inputStream)
+                );
+                yaml.setDefaults(newFile);
+                configFile.setFile(yaml);
+            }
+
+            newConfigs.put(entry.getKey(), configFile);
+        }
+
+        this.configs.putAll(newConfigs);
     }
 
     public void save() {
-        this.getAll().forEach(ConfigFile::save);
+        this.configs.values().forEach(ConfigFile::save);
     }
 
     public boolean has(@NotNull final String name) {

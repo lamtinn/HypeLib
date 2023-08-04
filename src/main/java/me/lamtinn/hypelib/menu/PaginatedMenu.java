@@ -1,9 +1,7 @@
 package me.lamtinn.hypelib.menu;
 
-import me.lamtinn.hypelib.utils.PluginUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -12,12 +10,16 @@ public abstract class PaginatedMenu extends Menu {
 
     private int page = 1;
     private int itemsPerPage;
-    private final int maxPage = (int) Math.ceil((double) getDataSize() / itemsPerPage);
-
+    private int maxPage;
     private List<?> data;
 
-    public PaginatedMenu(String title, int rows) {
+    public PaginatedMenu(@NotNull final String title, final int rows) {
         super(title, rows);
+        this.data = Collections.emptyList();
+    }
+
+    public PaginatedMenu(final int rows) {
+        super(rows);
         this.data = Collections.emptyList();
     }
 
@@ -34,6 +36,7 @@ public abstract class PaginatedMenu extends Menu {
 
         this.borders();
         this.setItemsPerPage(slots.size());
+        this.setMaxPage((int) Math.ceil((double) getDataSize() / getItemsPerPage()));
 
         List<Object> data = (List<Object>) getData();
         int items = this.getItemsPerPage();
@@ -78,6 +81,10 @@ public abstract class PaginatedMenu extends Menu {
         this.itemsPerPage = amount;
     }
 
+    public void setMaxPage(final int maxPage) {
+        this.maxPage = maxPage;
+    }
+
     public int getPage() {
         return this.page;
     }
@@ -92,23 +99,5 @@ public abstract class PaginatedMenu extends Menu {
 
     public int getDataSize() {
         return this.data == null ? 0 : this.data.size();
-    }
-
-    public int[] getSlots(final List<String> slots) {
-        List<Integer> arr = new ArrayList<>();
-        for (String input : slots) {
-            if (input.contains("-") && input.split("-", 2).length == 2) {
-                String[] parts = input.split("-", 2);
-                for (int j = Integer.parseInt(parts[0]); j <= Integer.parseInt(parts[1]); j++) {
-                    if (j == -1 || j > this.slots()) continue;
-                    arr.add(j);
-                }
-            } else {
-                int i = PluginUtils.isInteger(input);
-                if (i == -1 || i > slots()) continue;
-                arr.add(i);
-            }
-        }
-        return arr.stream().mapToInt(i -> i).toArray();
     }
 }

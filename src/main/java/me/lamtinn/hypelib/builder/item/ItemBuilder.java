@@ -39,33 +39,30 @@ public abstract class ItemBuilder {
 
     public static void register(@NotNull final Supplier<ItemGenerate> supplier) {
         ItemGenerate generate1 = supplier.get();
-        ItemBuilder.materials.put(
-                generate1.getType().toLowerCase(),
-                generate1
-        );
+        register(generate1);
     }
 
     private final Player player;
     private final ItemStack itemStack;
+    private final ConfigurationSection section;
 
-    private ItemGenerate generate = null;
+    private final ItemGenerate generate;
 
     private String name = " ";
     private List<String> lore = Collections.emptyList();
 
     public ItemBuilder(@NotNull final Player player, @NotNull final ConfigurationSection section) {
         this.player = player;
+        this.section = section;
 
         String material = section.getString("material", "DIRT");
-        if (material.contains("-")) {
-            this.generate = ItemBuilder.materials.getOrDefault(
-                    material.split("-")[0].toLowerCase(),
-                    null
-            );
-        }
+        this.generate = materials.values()
+                .stream()
+                .filter(g -> g.getType().equalsIgnoreCase(material)).findFirst()
+                .orElse(null);
 
         if (generate != null) {
-            this.itemStack = generate.generate(this.player, section);
+            this.itemStack = this.generate.generate(this.player, section);
         } else {
             Material mate = Material.getMaterial(
                     section.getString("material", "DIRT").toUpperCase()
@@ -331,6 +328,10 @@ public abstract class ItemBuilder {
 
     public ItemStack getItemStack() {
         return this.itemStack;
+    }
+
+    public @NotNull ConfigurationSection getSection() {
+        return this.section;
     }
 
     public String getName() {

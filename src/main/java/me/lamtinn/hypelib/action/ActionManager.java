@@ -17,8 +17,7 @@ public class ActionManager {
     private final HypePlugin plugin;
     private final Map<String, Action> actions;
 
-    private char first = '{', second = '}';
-    private final String regex = "\\" + first + "(.+?)\\" + second;
+    private String regex = "\\{(.+?)\\}";
 
     public ActionManager(@NotNull final HypePlugin plugin) {
         this.plugin = plugin;
@@ -37,8 +36,7 @@ public class ActionManager {
     }
 
     public void setBrackets(final char first, final char second) {
-        this.first = first;
-        this.second = second;
+        this.regex = "\\" + first + "(.+?)\\" + second;
     }
 
     public void run(@NotNull final Player player, @NotNull final String str) {
@@ -81,7 +79,11 @@ public class ActionManager {
     }
 
     public @NotNull String getExecutable(@NotNull final String str) {
-        return str.trim().split(this.regex + " ", 2)[1];
+        try {
+            return str.trim().split(this.regex + " ", 2)[1];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return "";
+        }
     }
 
     public @Nullable Action getAction(@NotNull String identifier) {
@@ -95,7 +97,7 @@ public class ActionManager {
 
     public @Nullable Action get(@NotNull final String str) {
         return this.getAll().stream()
-                .filter(action -> action.getIdentifiers().stream().anyMatch(str::equalsIgnoreCase))
+                .filter(action -> action.getIdentifiers().stream().anyMatch(s -> s.startsWith(str) || s.equalsIgnoreCase(str)))
                 .findFirst()
                 .orElse(null);
     }

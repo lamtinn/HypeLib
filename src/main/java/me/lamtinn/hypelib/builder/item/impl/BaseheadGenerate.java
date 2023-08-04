@@ -25,14 +25,14 @@ public class BaseheadGenerate extends ItemGenerate {
 
     @Override
     public String getType() {
-        return "basehead";
+        return "BASEHEAD";
     }
 
     @Override
     public ItemStack generate(@NotNull Player player, @NotNull ConfigurationSection section) {
         final String value = PlaceholderAPI.setPlaceholders(
                 player,
-                section.getString("material").split("-")[1]
+                section.getString("base64", "")
         );
         ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
 

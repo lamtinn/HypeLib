@@ -8,7 +8,7 @@ import me.lamtinn.hypelib.menu.events.MenuOpenEvent;
 import me.lamtinn.hypelib.menu.interfaces.HButton;
 import me.lamtinn.hypelib.menu.interfaces.HMenu;
 import me.lamtinn.hypelib.utils.AdventureUtils;
-import me.lamtinn.hypelib.utils.PluginUtils;
+import me.lamtinn.hypelib.utils.ValueUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -28,7 +28,7 @@ public abstract class Menu extends HMenu implements InventoryHolder {
 
     protected String title;
     protected int rows;
-    protected ClickAction action;
+    protected MenuClick action;
     protected boolean cancelclicks;
     protected boolean cooldown;
 
@@ -44,7 +44,18 @@ public abstract class Menu extends HMenu implements InventoryHolder {
     public Menu(final String title, final int rows) {
         this.title = title;
         this.rows = rows * 9;
-        this.action = ClickAction.BOTH;
+        this.action = MenuClick.BOTH;
+        this.buttons = new ConcurrentHashMap<>();
+        this.click = (menuClickEvent -> {});
+        this.open = (menuOpenEvent -> {});
+        this.close = (menuCloseEvent -> {});
+        this.drag = (InventoryDragEvent -> {});
+    }
+
+    public Menu(final int rows) {
+        this.title = "";
+        this.rows = rows * 9;
+        this.action = MenuClick.BOTH;
         this.buttons = new ConcurrentHashMap<>();
         this.click = (menuClickEvent -> {});
         this.open = (menuOpenEvent -> {});
@@ -57,18 +68,22 @@ public abstract class Menu extends HMenu implements InventoryHolder {
         return this.title;
     }
 
+    public void setTitle(@NotNull final String title) {
+        this.title = title;
+    }
+
     @Override
     public int slots() {
         return this.rows;
     }
 
     @Override
-    public ClickAction getClickAction() {
+    public MenuClick getClick() {
         return this.action;
     }
 
     @Override
-    public HMenu setClickAction(@NotNull HMenu.ClickAction action) {
+    public HMenu setClick(@NotNull HMenu.MenuClick action) {
         this.action = action;
         return this;
     }
@@ -169,7 +184,7 @@ public abstract class Menu extends HMenu implements InventoryHolder {
         for (int i = 0; i < inventory.getSize(); i++) {
             inventory.setItem(i, null);
         }
-        setButtons();
+        this.setButtons();
     }
 
     @Override
@@ -206,6 +221,10 @@ public abstract class Menu extends HMenu implements InventoryHolder {
         return this.player;
     }
 
+    public @NotNull Map<Integer, HButton> getButtons() {
+        return this.buttons;
+    }
+
     public void playerSound(String sound) {
         AdventureUtils.playerSound(this.player.getPlayer(), sound);
     }
@@ -215,13 +234,13 @@ public abstract class Menu extends HMenu implements InventoryHolder {
                 .flatMapToInt(input -> {
                     if (input.contains("-") && input.split("-", 2).length == 2) {
                         String[] parts = input.split("-", 2);
-                        int start = PluginUtils.isInteger(parts[0]);
-                        int end = PluginUtils.isInteger(parts[1]);
+                        int start = ValueUtils.isInteger(parts[0]);
+                        int end = ValueUtils.isInteger(parts[1]);
                         if (start != -1 && end != -1 && start <= end && end <= this.slots()) {
                             return IntStream.rangeClosed(start, end);
                         }
                     } else {
-                        int i = PluginUtils.isInteger(input);
+                        int i = ValueUtils.isInteger(input);
                         if (i != -1 && i <= this.slots()) {
                             return IntStream.of(i);
                         }

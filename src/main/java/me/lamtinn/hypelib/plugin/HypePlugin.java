@@ -49,7 +49,7 @@ public class HypePlugin extends BukkitPlugin {
         super.onEnable();
 
         this.registerPermissions();
-        this.addEnabledFunction(CommandManager::syncCommand);
+        this.addEnabledFunction(commandManager::syncCommand);
     }
 
     @Override
@@ -97,7 +97,9 @@ public class HypePlugin extends BukkitPlugin {
         configFile.save();
 
         this.saveDefaultConfig();
+
         this.configManager.register(configFile, names);
+        this.configManager.save();
     }
 
     public void registerAction(@NotNull final Action action) {

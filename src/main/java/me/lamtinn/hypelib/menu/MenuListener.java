@@ -21,15 +21,13 @@ public class MenuListener implements Listener {
 
     @EventHandler
     public void onInvClick(InventoryClickEvent e) {
-        if (!(e.getWhoClicked() instanceof Player)) return;
+        if (!(e.getWhoClicked() instanceof Player player)) return;
         if (e.getClickedInventory() == null) {
             return;
         }
 
-        Player player = (Player) e.getWhoClicked();
         final InventoryHolder holder = e.getInventory().getHolder();
-        if (holder instanceof Menu) {
-            Menu menu = (Menu) holder;
+        if (holder instanceof Menu menu) {
             if (e.getView().title().equals(AdventureUtils.toComponent(menu.title()))) {
                 if (menu.cancelAllClicks()) {
                     e.setCancelled(true);
@@ -45,32 +43,35 @@ public class MenuListener implements Listener {
                     return;
                 }
 
-                switch (menu.getClickAction()) {
-                    case TOP:
+                switch (menu.getClick()) {
+                    case TOP -> {
                         if (!e.getClickedInventory().equals(e.getView().getTopInventory())) {
                             return;
                         }
-                        break;
-                    case BOTTOM:
+                    }
+                    case BOTTOM -> {
                         if (!e.getClickedInventory().equals(e.getView().getBottomInventory())) {
                             return;
                         }
-                        break;
+                    }
                 }
                 menu.getClick(new MenuClickEvent(e, player, (Menu) holder));
                 button.setClick(new ButtonClickEvent(e, button, player));
+
+                player.updateInventory();
+                if (!menu.getButtons().isEmpty()) {
+                    menu.reloadButtons();
+                }
             }
         }
     }
 
     @EventHandler
     public void onInvDrag(InventoryDragEvent e) {
-        if (!(e.getWhoClicked() instanceof Player)) return;
+        if (!(e.getWhoClicked() instanceof Player player)) return;
 
-        Player player = (Player) e.getWhoClicked();
         final InventoryHolder holder = e.getInventory().getHolder();
-        if (holder instanceof Menu) {
-            Menu menu = (Menu) holder;
+        if (holder instanceof Menu menu) {
             if (e.getView().title().equals(AdventureUtils.toComponent(menu.title()))) {
                 menu.getDrag(new MenuDragEvent(e, player, menu));
             }
@@ -79,12 +80,10 @@ public class MenuListener implements Listener {
 
     @EventHandler
     public void onOpen(InventoryOpenEvent e) {
-        if (!(e.getPlayer() instanceof Player)) return;
+        if (!(e.getPlayer() instanceof Player player)) return;
 
-        Player player = (Player) e.getPlayer();
         final InventoryHolder holder = e.getInventory().getHolder();
-        if (holder instanceof Menu) {
-            Menu menu = (Menu) holder;
+        if (holder instanceof Menu menu) {
             if (e.getView().title().equals(AdventureUtils.toComponent(menu.title()))) {
                 menu.getOpen(new MenuOpenEvent(player, menu));
             }
@@ -93,12 +92,10 @@ public class MenuListener implements Listener {
 
     @EventHandler
     public void onClose(InventoryCloseEvent e) {
-        if (!(e.getPlayer() instanceof Player)) return;
+        if (!(e.getPlayer() instanceof Player player)) return;
 
-        Player player = (Player) e.getPlayer();
         final InventoryHolder holder = e.getInventory().getHolder();
-        if (holder instanceof Menu) {
-            Menu menu = (Menu) holder;
+        if (holder instanceof Menu menu) {
             if (e.getView().title().equals(AdventureUtils.toComponent(menu.title()))) {
                 menu.getClose(new MenuCloseEvent(player, menu));
             }

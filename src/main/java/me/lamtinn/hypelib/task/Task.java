@@ -14,7 +14,7 @@ public abstract class Task extends BukkitRunnable {
     private int time;
     private int countdown;
 
-    public Task(final HypePlugin plugin, final int time, final boolean loop, final boolean async) {
+    public Task(@NotNull final HypePlugin plugin, final int time, final boolean loop, final boolean async) {
         this.plugin = plugin;
         this.time = time;
         this.countdown = time;

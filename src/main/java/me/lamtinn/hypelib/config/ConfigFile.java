@@ -3,14 +3,11 @@ package me.lamtinn.hypelib.config;
 import me.lamtinn.hypelib.config.interfaces.Config;
 import me.lamtinn.hypelib.plugin.HypePlugin;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 public class ConfigFile implements Config {
 
@@ -99,14 +96,7 @@ public class ConfigFile implements Config {
     }
 
     @Override
-    public void reload() {
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        InputStream inputStream = plugin.getResource(this.getFilePath());
-
-        if (inputStream != null) {
-            YamlConfiguration newfile = YamlConfiguration.loadConfiguration(new InputStreamReader(inputStream));
-            config.setDefaults(newfile);
-            this.config = config;
-        }
+    public void setFile(@NotNull FileConfiguration file) {
+        this.config = file;
     }
 }
