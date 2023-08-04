@@ -5,3 +5,18 @@
 
 * This is a collection of common codes used in my projects.
 * All the code in this is created for the purpose of Bukkit Plugin.
+
+## Add as a dependency
+
+### Maven
+
+```xml
+
+<dependencies>
+  <dependency>
+    <groupId>me.lamtinn</groupId>
+    <artifactId>hypelib</artifactId>
+    <version>VERSION</version>
+  </dependency>
+</dependencies>
+```
