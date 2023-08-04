@@ -5,6 +5,7 @@ import me.lamtinn.hypelib.menu.events.MenuClickEvent;
 import me.lamtinn.hypelib.menu.events.MenuCloseEvent;
 import me.lamtinn.hypelib.menu.events.MenuDragEvent;
 import me.lamtinn.hypelib.menu.events.MenuOpenEvent;
+import me.lamtinn.hypelib.menu.models.Button;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,11 +24,11 @@ public abstract class HMenu {
 
     public abstract boolean cooldown();
 
-    public abstract HButton getButton(final int slot);
+    public abstract Button getButton(final int slot);
 
-    public abstract void addButton(@NotNull HButton ... button);
+    public abstract void addButton(@NotNull Button... button);
 
-    public abstract void addButton(@NotNull HButton button);
+    public abstract void addButton(@NotNull Button button);
 
     public abstract HMenu onClick(final Consumer<MenuClickEvent> e);
 
@@ -42,6 +43,6 @@ public abstract class HMenu {
     public abstract void close();
 
     public enum MenuClick {
-        TOP, BOTTOM, BOTH;
+        TOP, BOTTOM, BOTH
     }
 }

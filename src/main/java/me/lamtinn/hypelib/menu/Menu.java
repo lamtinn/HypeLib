@@ -5,8 +5,8 @@ import me.lamtinn.hypelib.menu.events.MenuClickEvent;
 import me.lamtinn.hypelib.menu.events.MenuCloseEvent;
 import me.lamtinn.hypelib.menu.events.MenuDragEvent;
 import me.lamtinn.hypelib.menu.events.MenuOpenEvent;
-import me.lamtinn.hypelib.menu.interfaces.HButton;
 import me.lamtinn.hypelib.menu.interfaces.HMenu;
+import me.lamtinn.hypelib.menu.models.Button;
 import me.lamtinn.hypelib.utils.AdventureUtils;
 import me.lamtinn.hypelib.utils.ValueUtils;
 import org.bukkit.Bukkit;
@@ -14,10 +14,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
@@ -32,12 +31,14 @@ public abstract class Menu extends HMenu implements InventoryHolder {
     protected boolean cancelclicks;
     protected boolean cooldown;
 
-    protected Map<Integer, HButton> buttons;
+    protected Map<Integer, Button> buttons;
 
     private Consumer<MenuClickEvent> click;
     private Consumer<MenuOpenEvent> open;
     private Consumer<MenuCloseEvent> close;
     private Consumer<MenuDragEvent> drag;
+
+    private MenuUpdateTask updateTask;
 
     private Player player;
 
@@ -107,18 +108,18 @@ public abstract class Menu extends HMenu implements InventoryHolder {
     }
 
     @Override
-    public HButton getButton(int slot) {
+    public Button getButton(int slot) {
         if (!this.buttons.containsKey(slot)) return null;
         return this.buttons.get(slot);
     }
 
     @Override
-    public void addButton(@NotNull HButton @NotNull ... button) {
+    public void addButton(@NotNull Button @NotNull ... button) {
         Arrays.stream(button).forEach(this::addButton);
     }
 
     @Override
-    public void addButton(@NotNull HButton button) {
+    public void addButton(@NotNull Button button) {
         if (button.getSlots() != null) {
             for (int slot : button.getSlots()) {
                 if (slot == -1 || slot > this.slots() || this.buttons.containsKey(slot)) {
@@ -198,6 +199,8 @@ public abstract class Menu extends HMenu implements InventoryHolder {
 
         final Player target = this.getPlayer();
         target.openInventory(this.inventory);
+
+        this.updateTask = new MenuUpdateTask(this);
     }
 
     @Override
@@ -210,6 +213,9 @@ public abstract class Menu extends HMenu implements InventoryHolder {
         this.open = null;
         this.close = null;
         this.drag = null;
+
+        this.updateTask.cancel();
+        this.updateTask = null;
     }
 
     @Override
@@ -217,16 +223,24 @@ public abstract class Menu extends HMenu implements InventoryHolder {
         return this.inventory;
     }
 
+    public @Nullable MenuUpdateTask getUpdateTask() {
+        return this.updateTask;
+    }
+
     public @NotNull Player getPlayer() {
         return this.player;
     }
 
-    public @NotNull Map<Integer, HButton> getButtons() {
+    public @Nullable Set<Button> getButtons() {
+        return new HashSet<>(this.buttons.values());
+    }
+
+    public @NotNull Map<Integer, Button> getItemMap() {
         return this.buttons;
     }
 
-    public void playerSound(String sound) {
-        AdventureUtils.playerSound(this.player.getPlayer(), sound);
+    public @NotNull String parse(@NotNull final String value) {
+        return PlaceholderAPI.setPlaceholders(this.player, value);
     }
 
     public int[] getSlots(final List<String> slots) {
@@ -248,5 +262,13 @@ public abstract class Menu extends HMenu implements InventoryHolder {
                     return IntStream.empty();
                 })
                 .toArray();
+    }
+
+    public void setUpdateTask(final MenuUpdateTask updateTask) {
+        this.updateTask = updateTask;
+    }
+
+    public void playerSound(@NotNull final String sound) {
+        AdventureUtils.playerSound(this.player.getPlayer(), sound);
     }
 }

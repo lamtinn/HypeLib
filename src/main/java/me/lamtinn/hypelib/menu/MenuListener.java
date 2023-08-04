@@ -59,7 +59,7 @@ public class MenuListener implements Listener {
                 button.setClick(new ButtonClickEvent(e, button, player));
 
                 player.updateInventory();
-                if (!menu.getButtons().isEmpty()) {
+                if (!menu.getItemMap().isEmpty()) {
                     menu.reloadButtons();
                 }
             }
@@ -98,6 +98,11 @@ public class MenuListener implements Listener {
         if (holder instanceof Menu menu) {
             if (e.getView().title().equals(AdventureUtils.toComponent(menu.title()))) {
                 menu.getClose(new MenuCloseEvent(player, menu));
+            }
+
+            if (menu.getUpdateTask() != null) {
+                menu.getUpdateTask().cancel();
+                menu.setUpdateTask(null);
             }
         }
     }
