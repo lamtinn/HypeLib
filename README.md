@@ -1,4 +1,4 @@
-# HypeLib ![Latest](https://img.shields.io/badge/latest_version-v1.1.0-0082c8)
+# HypeLib ![Author](https://img.shields.io/badge/author-lamtinn-11FFBD) ![Latest](https://img.shields.io/badge/latest_version-v1.1.0-0082c8)
 - Java library of OpTic Studio (now my personal) projects.
 
 ## Info
