@@ -1,2 +1,2 @@
 # HypeLib
-Java library of OpTic Studio projects.
+Java library of OpTic Studio (now my personal) projects.
