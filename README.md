@@ -7,7 +7,7 @@
 * All the code in this is created for the purpose of Bukkit Plugin.
 
 ## Add as a dependency
-
+You need to clone the source code of this project first. Because I use this **Maven** you need to execute `mvn clean install` to install this project into the local repository. Then you just reload the project, done!
 ### Maven
 
 ```xml
