@@ -1,3 +1,6 @@
+![Banner](https://i.imgur.com/onh0yYn.png)
+<div align="center">
+
 # HypeLib ![Author](https://img.shields.io/badge/author-lamtinn-0083B0) ![Latest](https://img.shields.io/badge/latest_version-v1.1.0-0082c8)
 - Java library of OpTic Studio (now my personal) projects.
 
