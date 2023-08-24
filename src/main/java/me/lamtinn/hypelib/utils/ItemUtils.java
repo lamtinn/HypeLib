@@ -1,5 +1,6 @@
 package me.lamtinn.hypelib.utils;
 
+import me.lamtinn.hypelib.object.PlayerObject;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -18,6 +19,10 @@ public class ItemUtils {
     public static void giveItem(final Player player, @NotNull ItemStack... itemStacks) {
         player.getInventory().addItem(itemStacks).values()
                 .forEach(remaining -> player.getWorld().dropItem(player.getLocation(), remaining));
+    }
+
+    public static <T extends PlayerObject> void giveItem(final T player, @NotNull ItemStack... itemStacks) {
+        if (player.getPlayer() != null) ItemUtils.giveItem(player.getPlayer(), itemStacks);
     }
 
     public static void removeItem(final Inventory inv, @NotNull Collection<ItemStack> items) {

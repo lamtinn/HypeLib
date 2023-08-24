@@ -1,19 +1,14 @@
 package me.lamtinn.hypelib.action.impl;
 
 import me.lamtinn.hypelib.action.Action;
+import me.lamtinn.hypelib.action.annotation.Identifiers;
 import me.lamtinn.hypelib.builder.BossbarBuilder;
 import net.kyori.adventure.bossbar.BossBar;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Set;
-
+@Identifiers({"bossbar", "bb"})
 public class BossbarAction extends Action {
-
-    @Override
-    public @NotNull Set<String> getIdentifiers() {
-        return this.convert("bossbar", "bb");
-    }
 
     @Override
     public void execute(@NotNull Player player, @NotNull String executable) {

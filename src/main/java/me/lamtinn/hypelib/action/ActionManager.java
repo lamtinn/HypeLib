@@ -1,6 +1,7 @@
 package me.lamtinn.hypelib.action;
 
 import me.clip.placeholderapi.PlaceholderAPI;
+import me.lamtinn.hypelib.action.annotation.Identifiers;
 import me.lamtinn.hypelib.action.impl.*;
 import me.lamtinn.hypelib.plugin.HypePlugin;
 import me.lamtinn.hypelib.task.scheduler.Scheduler;
@@ -9,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,16 +25,17 @@ public class ActionManager {
         this.plugin = plugin;
         this.actions = new HashMap<>();
 
-        register(new PlayerAction());
-        register(new ConsoleAction());
-        register(new MessageAction());
-        register(new SoundAction());
-        register(new TitleAction());
-        register(new ChatAction());
-        register(new BossbarAction());
-        register(new BroadcastAction());
-        register(new ActionbarAction());
-        register(new CloseAction());
+        register(PlayerAction::new);
+        register(ConsoleAction::new);
+        register(MessageAction::new);
+        register(SoundAction::new);
+        register(TitleAction::new);
+        register(ChatAction::new);
+        register(BossbarAction::new);
+        register(BroadcastAction::new);
+        register(ActionbarAction::new);
+        register(CloseAction::new);
+        register(RefreshAction::new);
     }
 
     public void setBrackets(final char first, final char second) {
@@ -60,11 +63,22 @@ public class ActionManager {
     }
 
     public void register(@NotNull final Action action) {
-        action.getIdentifiers().forEach(s -> this.actions.put(s, action));
+        final Identifiers identifiers = action.getClass()
+                .getAnnotation(Identifiers.class);
+        if (identifiers != null) {
+            String[] value = identifiers.value();
+            Arrays.stream(value).forEach(s -> this.actions.put(s, action));
+        }
+    }
+
+    public void register(@NotNull final Supplier<Action> supplier) {
+        this.register(supplier.get());
     }
 
     public void unregister(@NotNull final String identifier) {
         final Action action = this.actions.get(identifier);
+        if (action == null) return;
+
         for (Map.Entry<String, Action> entry : this.actions.entrySet()) {
             if (entry.getValue() == action) {
                 this.actions.remove(entry.getKey());
@@ -73,7 +87,8 @@ public class ActionManager {
     }
 
     public void unregister(@NotNull final Action action) {
-        for (final String identifier : action.getIdentifiers()) {
+        final Identifiers identifiers = action.getClass().getAnnotation(Identifiers.class);
+        for (final String identifier : identifiers.value()) {
             this.actions.remove(identifier);
         }
     }
@@ -97,7 +112,13 @@ public class ActionManager {
 
     public @Nullable Action get(@NotNull final String str) {
         return this.getAll().stream()
-                .filter(action -> action.getIdentifiers().stream().anyMatch(s -> s.startsWith(str) || s.equalsIgnoreCase(str)))
+                .filter(action -> {
+                    final Identifiers identifiers = action.getClass()
+                            .getAnnotation(Identifiers.class);
+                    return Arrays.stream(identifiers.value())
+                            .anyMatch(s -> s.startsWith(str) || s.equalsIgnoreCase(str)
+                            );
+                })
                 .findFirst()
                 .orElse(null);
     }

@@ -20,6 +20,7 @@ import org.jetbrains.annotations.Nullable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 
 public class HypePlugin extends BukkitPlugin {
@@ -31,7 +32,7 @@ public class HypePlugin extends BukkitPlugin {
     private final ConfigManager configManager = new ConfigManager(this);
     private final ActionManager actionManager = new ActionManager(this);
 
-    private Set<Permission> registeredPermissions = new HashSet<>();
+    private final Set<Permission> registeredPermissions = new HashSet<>();
 
     public HypePlugin() {
         super();
@@ -79,31 +80,21 @@ public class HypePlugin extends BukkitPlugin {
     }
 
     public void registerConfig(@NotNull final ConfigFile configFile, @NotNull final String name) {
-        this.reloadConfig();
-
-        configFile.create();
-        configFile.getConfig().options().copyDefaults();
-        configFile.save();
-
-        this.saveDefaultConfig();
         this.configManager.register(configFile, name);
+        configFile.create();
     }
 
     public void registerConfig(@NotNull final ConfigFile configFile, @NotNull final String ... names) {
-        this.reloadConfig();
-
-        configFile.create();
-        configFile.getConfig().options().copyDefaults();
-        configFile.save();
-
-        this.saveDefaultConfig();
-
         this.configManager.register(configFile, names);
-        this.configManager.save();
+        configFile.create();
     }
 
     public void registerAction(@NotNull final Action action) {
         this.actionManager.register(action);
+    }
+
+    public void registerAction(@NotNull final Supplier<Action> supplier) {
+        this.registerAction(supplier.get());
     }
 
     public void registerPermission(@NotNull final Permission permission) {
@@ -114,11 +105,7 @@ public class HypePlugin extends BukkitPlugin {
     private void registerPermissions() {
         for (Class<?> clazz : this.getPermissions()) {
             for (Field field : clazz.getDeclaredFields()) {
-                int modifiers = field.getModifiers();
-
-                if (!field.getType().equals(Permission.class) || !Modifier.isStatic(modifiers) || !Modifier.isPublic(modifiers))
-                    continue;
-
+                if (!isStaticPublicPermissionField(field)) continue;
                 try {
                     Permission permission = (Permission) field.get(null);
                     registerPermission(permission);
@@ -127,6 +114,11 @@ public class HypePlugin extends BukkitPlugin {
                 }
             }
         }
+    }
+
+    private boolean isStaticPublicPermissionField(Field field) {
+        int modifiers = field.getModifiers();
+        return field.getType().equals(Permission.class) && Modifier.isStatic(modifiers) && Modifier.isPublic(modifiers);
     }
 
     public <T> void registerProvider(Class<T> service, T provider) {

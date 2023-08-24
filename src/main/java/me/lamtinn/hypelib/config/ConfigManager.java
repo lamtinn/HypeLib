@@ -8,10 +8,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public final class ConfigManager {
@@ -24,7 +22,7 @@ public final class ConfigManager {
         this.configs = new HashMap<>();
     }
 
-    public void register(@NotNull final ConfigFile configFile, final String ... names) {
+    public void register(@NotNull final ConfigFile configFile, final String... names) {
         Arrays.stream(names).forEach(name -> register(configFile, name));
     }
 
@@ -45,26 +43,22 @@ public final class ConfigManager {
     }
 
     public void reload() {
-        final Map<String, ConfigFile> newConfigs = new HashMap<>(this.configs);
-        this.configs.clear();
-
-        for (final Map.Entry<String, ConfigFile> entry : newConfigs.entrySet()) {
+        for (final Map.Entry<String, ConfigFile> entry : this.configs.entrySet()) {
             ConfigFile configFile = entry.getValue();
             FileConfiguration yaml = YamlConfiguration.loadConfiguration(configFile.getFile());
 
             InputStream inputStream = this.plugin.getResource(configFile.getFilePath());
             if (inputStream != null) {
                 YamlConfiguration newFile = YamlConfiguration.loadConfiguration(
-                        new InputStreamReader(inputStream)
+                        new InputStreamReader(inputStream, StandardCharsets.UTF_8)
                 );
+
                 yaml.setDefaults(newFile);
                 configFile.setFile(yaml);
+
+                this.configs.put(entry.getKey(), configFile);
             }
-
-            newConfigs.put(entry.getKey(), configFile);
         }
-
-        this.configs.putAll(newConfigs);
     }
 
     public void save() {
@@ -76,7 +70,8 @@ public final class ConfigManager {
     }
 
     public @Nullable FileConfiguration get(@NotNull final String name) {
-        return this.configs.getOrDefault(name, null).getConfig();
+        ConfigFile configFile = this.configs.get(name);
+        return configFile != null ? configFile.getConfig() : null;
     }
 
     public @NotNull Collection<ConfigFile> getAll() {
@@ -84,10 +79,13 @@ public final class ConfigManager {
     }
 
     public @NotNull Collection<FileConfiguration> getConfigFiles() {
-        return this.getAll().stream().map(ConfigFile::getConfig).collect(Collectors.toList());
+        return this.configs.values().stream()
+                .map(ConfigFile::getConfig)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 
     public @NotNull Map<String, ConfigFile> getConfigs() {
-        return this.configs;
+        return Collections.unmodifiableMap(this.configs);
     }
 }

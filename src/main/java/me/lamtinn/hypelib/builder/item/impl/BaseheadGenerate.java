@@ -30,14 +30,18 @@ public class BaseheadGenerate extends ItemGenerate {
 
     @Override
     public ItemStack generate(@NotNull Player player, @NotNull ConfigurationSection section) {
-        final String value = PlaceholderAPI.setPlaceholders(
-                player,
-                section.getString("base64", "")
+        return this.generate(player, section.getString("base64", ""));
+    }
+
+    @Override
+    public ItemStack generate(@NotNull Player player, @NotNull String value) {
+        final String str = PlaceholderAPI.setPlaceholders(
+                player, value
         );
         ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
 
         ItemUtils.metaModify(itemStack, (SkullMeta meta) -> {
-            GameProfile gameProfile = this.getGameProfile(value);
+            GameProfile gameProfile = this.getGameProfile(str);
             Field field;
 
             try {

@@ -6,18 +6,16 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class Task extends BukkitRunnable {
 
-    public final HypePlugin plugin;
-
+    protected final HypePlugin plugin;
+    private int initialTime;
+    private int timeRemaining;
     private final boolean loop;
     private final boolean async;
 
-    private int time;
-    private int countdown;
-
-    public Task(@NotNull final HypePlugin plugin, final int time, final boolean loop, final boolean async) {
+    public Task(@NotNull final HypePlugin plugin, final int initialTime, final boolean loop, final boolean async) {
         this.plugin = plugin;
-        this.time = time;
-        this.countdown = time;
+        this.initialTime = initialTime;
+        this.timeRemaining = initialTime;
         this.loop = loop;
         this.async = async;
 
@@ -28,40 +26,42 @@ public abstract class Task extends BukkitRunnable {
         }
     }
 
-    public void onRun() {
-    }
-
     public abstract void onFinish();
 
+    @Override
     public final void run() {
         this.onRun();
-        final int countdown = this.countdown - 1;
-        this.countdown = countdown;
+        this.timeRemaining--;
 
-        if (countdown > 0) {
-            return;
-        }
-        this.countdown = this.time;
-        this.onFinish();
-        if (!this.loop) {
-            this.cancel();
+        if (this.timeRemaining <= 0) {
+            this.onFinish();
+            if (!this.loop) {
+                this.cancel();
+            } else {
+                this.timeRemaining = this.initialTime;
+            }
         }
     }
 
     public final synchronized void restart() {
-        this.countdown = this.time;
+        this.timeRemaining = this.initialTime;
     }
 
     public void setTime(final int time) {
-        this.time = time;
+        this.initialTime = time;
+        this.timeRemaining = time;
     }
 
     public @NotNull HypePlugin getPlugin() {
         return this.plugin;
     }
 
-    public int getTime() {
-        return this.time;
+    public int getInitialTime() {
+        return this.initialTime;
+    }
+
+    public int getTimeRemaining() {
+        return this.timeRemaining;
     }
 
     public boolean isAsync() {
@@ -72,7 +72,5 @@ public abstract class Task extends BukkitRunnable {
         return this.loop;
     }
 
-    public int getCountdown() {
-        return this.countdown;
-    }
+    public abstract void onRun();
 }

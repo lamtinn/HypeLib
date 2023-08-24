@@ -7,14 +7,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.NotNull;
 
-@Identifiers("close")
-public class CloseAction extends Action {
+@Identifiers("refresh")
+public class RefreshAction extends Action {
 
     @Override
     public void execute(@NotNull Player player, @NotNull String executable) {
         InventoryHolder holder = player.getOpenInventory().getTopInventory().getHolder();
         if (holder instanceof Menu menu) {
-            menu.close();
+            menu.reloadButtons();
         }
     }
 }

@@ -1,5 +1,6 @@
 package me.lamtinn.hypelib.task.scheduler;
 
+import me.lamtinn.hypelib.plugin.HypePlugin;
 import me.lamtinn.hypelib.task.scheduler.bukkit.BukkitScheduler;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -9,7 +10,7 @@ public interface Scheduler {
         return new BukkitScheduler(plugin);
     }
 
-    static <T extends JavaPlugin> Scheduler plugin(Class<T> clazz) {
+    static <T extends HypePlugin> Scheduler plugin(Class<T> clazz) {
         return plugin(JavaPlugin.getPlugin(clazz));
     }
 

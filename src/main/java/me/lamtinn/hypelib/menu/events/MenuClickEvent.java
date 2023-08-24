@@ -44,6 +44,10 @@ public class MenuClickEvent extends HMenuEvent implements Cancellable {
         this.event.setCancelled(cancel);
     }
 
+    public InventoryClickEvent getEvent() {
+        return this.event;
+    }
+
     public ClickType getClickType() {
         return this.event.getClick();
     }

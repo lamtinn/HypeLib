@@ -7,6 +7,7 @@ import me.lamtinn.hypelib.utils.AdventureUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
+import java.util.Optional;
 
 public abstract class SQLConnector implements Connector {
 
@@ -75,26 +76,26 @@ public abstract class SQLConnector implements Connector {
         return this.connection;
     }
 
-    public ResultSet query(@NotNull final String query) {
+    public Optional<ResultSet> query(@NotNull final String query) {
         try {
             Statement statement = this.connection.createStatement();
             if (statement.execute(query)) {
-                return statement.getResultSet();
+                return Optional.of(statement.getResultSet());
             }
             int i = statement.getUpdateCount();
-            return this.connection.createStatement().executeQuery("SELECT " + i);
+            return Optional.of(this.connection.createStatement().executeQuery("SELECT " + i));
         } catch (SQLException e) {
             AdventureUtils.consoleMessage("{prefix} <gray>Failed to execute query(): <#FF416C>" + e.getMessage());
-            return null;
+            return Optional.empty();
         }
     }
 
-    public int update(@NotNull final String query) {
+    public Optional<Integer> update(@NotNull final String query) {
         try {
-            return this.connection.createStatement().executeUpdate(query);
+            return Optional.of(this.connection.createStatement().executeUpdate(query));
         } catch (SQLException e) {
             AdventureUtils.consoleMessage("{prefix} <gray>Failed to execute update(): <#FF416C>" + e.getMessage());
-            return -1;
+            return Optional.of(-1);
         }
     }
 

@@ -38,13 +38,13 @@ public abstract class ItemBuilder {
     }
 
     public static void register(@NotNull final Supplier<ItemGenerate> supplier) {
-        ItemGenerate generate1 = supplier.get();
-        register(generate1);
+        ItemGenerate generate = supplier.get();
+        register(generate);
     }
 
     private final Player player;
     private final ItemStack itemStack;
-    private final ConfigurationSection section;
+    private ConfigurationSection section;
 
     private final ItemGenerate generate;
 
@@ -58,7 +58,8 @@ public abstract class ItemBuilder {
         String material = section.getString("material", "DIRT");
         this.generate = materials.values()
                 .stream()
-                .filter(g -> g.getType().equalsIgnoreCase(material)).findFirst()
+                .filter(g -> g.getType().equalsIgnoreCase(material))
+                .findFirst()
                 .orElse(null);
 
         if (generate != null) {
@@ -94,6 +95,13 @@ public abstract class ItemBuilder {
         }
     }
 
+    public ItemBuilder(@NotNull final Player player, @NotNull final ItemGenerate generate, @NotNull final String value) {
+        this.player = player;
+        this.generate = generate;
+
+        this.itemStack = value.isEmpty() ? new ItemStack(Material.DIRT) : generate.generate(player, value);
+    }
+
     public ItemBuilder setName(@NotNull final String name) {
         this.name = name;
         return this;
@@ -122,13 +130,9 @@ public abstract class ItemBuilder {
 
     public ItemBuilder setCustomModel(final int data) {
         if (this.itemStack.getType() == Material.PLAYER_HEAD) {
-            return this.metaModify((SkullMeta meta) ->
-                meta.setCustomModelData(data)
-            );
+            return this.metaModify((SkullMeta meta) -> meta.setCustomModelData(data));
         }
-        return this.metaModify(meta ->
-            meta.setCustomModelData(data)
-        );
+        return this.metaModify(meta -> meta.setCustomModelData(data));
     }
 
     public ItemBuilder setEnchantments(@NotNull final Map<Enchantment, Integer> enchantments) {

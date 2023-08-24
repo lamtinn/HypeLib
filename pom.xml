@@ -6,7 +6,7 @@
 
     <groupId>me.lamtinn</groupId>
     <artifactId>hypelib</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
 
     <name>HypeLib</name>
     <description>Java library of OpTic Studio (now my personal) projects.</description>

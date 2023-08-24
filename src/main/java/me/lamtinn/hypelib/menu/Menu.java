@@ -14,7 +14,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,22 +23,17 @@ import java.util.stream.IntStream;
 public abstract class Menu extends HMenu implements InventoryHolder {
 
     protected Inventory inventory;
-
     protected String title;
     protected int rows;
     protected MenuClick action;
     protected boolean cancelclicks;
     protected boolean cooldown;
-
     protected Map<Integer, Button> buttons;
-
     private Consumer<MenuClickEvent> click;
     private Consumer<MenuOpenEvent> open;
     private Consumer<MenuCloseEvent> close;
     private Consumer<MenuDragEvent> drag;
-
     private MenuUpdateTask updateTask;
-
     private Player player;
 
     public Menu(final String title, final int rows) {
@@ -47,10 +41,10 @@ public abstract class Menu extends HMenu implements InventoryHolder {
         this.rows = rows * 9;
         this.action = MenuClick.BOTH;
         this.buttons = new ConcurrentHashMap<>();
-        this.click = (menuClickEvent -> {});
-        this.open = (menuOpenEvent -> {});
-        this.close = (menuCloseEvent -> {});
-        this.drag = (InventoryDragEvent -> {});
+        this.click = (menuClickEvent) -> {};
+        this.open = (menuOpenEvent) -> {};
+        this.close = (menuCloseEvent) -> {};
+        this.drag = (menuDragEvent) -> {};
     }
 
     public Menu(final int rows) {
@@ -58,13 +52,12 @@ public abstract class Menu extends HMenu implements InventoryHolder {
         this.rows = rows * 9;
         this.action = MenuClick.BOTH;
         this.buttons = new ConcurrentHashMap<>();
-        this.click = (menuClickEvent -> {});
-        this.open = (menuOpenEvent -> {});
-        this.close = (menuCloseEvent -> {});
-        this.drag = (InventoryDragEvent -> {});
+        this.click = (menuClickEvent) -> {};
+        this.open = (menuOpenEvent) -> {};
+        this.close = (menuCloseEvent) -> {};
+        this.drag = (menuDragEvent) -> {};
     }
 
-    @Override
     public String title() {
         return this.title;
     }
@@ -73,23 +66,19 @@ public abstract class Menu extends HMenu implements InventoryHolder {
         this.title = title;
     }
 
-    @Override
     public int slots() {
         return this.rows;
     }
 
-    @Override
     public MenuClick getClick() {
         return this.action;
     }
 
-    @Override
-    public HMenu setClick(@NotNull HMenu.MenuClick action) {
+    public HMenu setClick(@NotNull MenuClick action) {
         this.action = action;
         return this;
     }
 
-    @Override
     public boolean cancelAllClicks() {
         return this.cancelclicks;
     }
@@ -98,7 +87,6 @@ public abstract class Menu extends HMenu implements InventoryHolder {
         this.cancelclicks = cancelclicks;
     }
 
-    @Override
     public boolean cooldown() {
         return this.cooldown;
     }
@@ -107,18 +95,14 @@ public abstract class Menu extends HMenu implements InventoryHolder {
         this.cooldown = cooldown;
     }
 
-    @Override
     public Button getButton(int slot) {
-        if (!this.buttons.containsKey(slot)) return null;
         return this.buttons.get(slot);
     }
 
-    @Override
-    public void addButton(@NotNull Button @NotNull ... button) {
+    public void addButton(@NotNull Button... button) {
         Arrays.stream(button).forEach(this::addButton);
     }
 
-    @Override
     public void addButton(@NotNull Button button) {
         if (button.getSlots() != null) {
             for (int slot : button.getSlots()) {
@@ -138,8 +122,7 @@ public abstract class Menu extends HMenu implements InventoryHolder {
         }
     }
 
-    @Override
-    public HMenu onClick(final Consumer<MenuClickEvent> e) {
+    public Menu onClick(final Consumer<MenuClickEvent> e) {
         this.click = e;
         return this;
     }
@@ -148,8 +131,7 @@ public abstract class Menu extends HMenu implements InventoryHolder {
         this.click.accept(e);
     }
 
-    @Override
-    public HMenu onOpen(final Consumer<MenuOpenEvent> e) {
+    public Menu onOpen(final Consumer<MenuOpenEvent> e) {
         this.open = e;
         return this;
     }
@@ -158,8 +140,7 @@ public abstract class Menu extends HMenu implements InventoryHolder {
         this.open.accept(e);
     }
 
-    @Override
-    public HMenu onClose(final Consumer<MenuCloseEvent> e) {
+    public Menu onClose(final Consumer<MenuCloseEvent> e) {
         this.close = e;
         return this;
     }
@@ -168,8 +149,7 @@ public abstract class Menu extends HMenu implements InventoryHolder {
         this.close.accept(e);
     }
 
-    @Override
-    public HMenu onDrag(final Consumer<MenuDragEvent> e) {
+    public Menu onDrag(final Consumer<MenuDragEvent> e) {
         this.drag = e;
         return this;
     }
@@ -188,7 +168,6 @@ public abstract class Menu extends HMenu implements InventoryHolder {
         this.setButtons();
     }
 
-    @Override
     public void open(final Player player) {
         this.player = player;
         this.buttons.clear();
@@ -203,7 +182,6 @@ public abstract class Menu extends HMenu implements InventoryHolder {
         this.updateTask = new MenuUpdateTask(this);
     }
 
-    @Override
     public void close() {
         this.inventory.close();
         this.title = null;
@@ -214,7 +192,9 @@ public abstract class Menu extends HMenu implements InventoryHolder {
         this.close = null;
         this.drag = null;
 
-        this.updateTask.cancel();
+        if (this.updateTask != null) {
+            this.updateTask.cancel();
+        }
         this.updateTask = null;
     }
 
@@ -223,23 +203,23 @@ public abstract class Menu extends HMenu implements InventoryHolder {
         return this.inventory;
     }
 
-    public @Nullable MenuUpdateTask getUpdateTask() {
+    public MenuUpdateTask getUpdateTask() {
         return this.updateTask;
     }
 
-    public @NotNull Player getPlayer() {
+    public Player getPlayer() {
         return this.player;
     }
 
-    public @Nullable Set<Button> getButtons() {
+    public Set<Button> getButtons() {
         return new HashSet<>(this.buttons.values());
     }
 
-    public @NotNull Map<Integer, Button> getItemMap() {
+    public Map<Integer, Button> getItemMap() {
         return this.buttons;
     }
 
-    public @NotNull String parse(@NotNull final String value) {
+    public String parse(@NotNull final String value) {
         return PlaceholderAPI.setPlaceholders(this.player, value);
     }
 

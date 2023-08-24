@@ -1,6 +1,5 @@
 package me.lamtinn.hypelib.task.scheduler;
 
-import org.bukkit.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.BooleanSupplier;

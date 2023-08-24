@@ -28,16 +28,20 @@ public class HeadGenerate extends ItemGenerate {
 
     @Override
     public ItemStack generate(@NotNull Player player, @NotNull ConfigurationSection section) {
-        final String value = PlaceholderAPI.setPlaceholders(
-                player,
-                section.getString("head-owner",
-                        ValueUtils.getRandom(Bukkit.getOnlinePlayers()).getName()
-                )
+        return this.generate(player, section.getString("head-owner",
+                ValueUtils.getRandom(Bukkit.getOnlinePlayers()).getName()
+        ));
+    }
+
+    @Override
+    public ItemStack generate(@NotNull Player player, @NotNull String value) {
+        final String str = PlaceholderAPI.setPlaceholders(
+                player, value
         );
         ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
 
         ItemUtils.metaModify(itemStack, (SkullMeta meta) ->
-                meta.setOwner(value)
+                meta.setOwner(str)
         );
         return itemStack;
     }

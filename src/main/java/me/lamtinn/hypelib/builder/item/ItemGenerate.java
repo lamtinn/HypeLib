@@ -16,6 +16,8 @@ public abstract class ItemGenerate {
 
     public abstract ItemStack generate(@NotNull final Player player, @NotNull final ConfigurationSection section);
 
+    public abstract ItemStack generate(@NotNull final Player player, @NotNull final String value);
+
     public ItemBuilder setMeta(@NotNull final ItemBuilder builder) {
         return builder.metaModify(meta -> {
             meta.displayName(

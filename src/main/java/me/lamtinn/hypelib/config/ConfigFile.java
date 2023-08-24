@@ -12,12 +12,14 @@ import java.io.IOException;
 public class ConfigFile implements Config {
 
     private final HypePlugin plugin;
-    private final String name, filename, dir;
+    private final String name;
+    private final String filename;
+    private final String dir;
 
     private FileConfiguration config;
     private File file;
 
-    public ConfigFile(final HypePlugin plugin, @NotNull final String filename, @NotNull final String dir) {
+    public ConfigFile(final HypePlugin plugin, @NotNull final String filename, @Nullable final String dir) {
         this.plugin = plugin;
         this.filename = filename;
         this.name = filename.replace(".yml", "");
@@ -25,10 +27,7 @@ public class ConfigFile implements Config {
     }
 
     public ConfigFile(final HypePlugin plugin, @NotNull final String filename) {
-        this.plugin = plugin;
-        this.filename = filename;
-        this.name = filename.replace(".yml", "");
-        this.dir = null;
+        this(plugin, filename, null);
     }
 
     @Override
@@ -43,12 +42,12 @@ public class ConfigFile implements Config {
 
     @Override
     public @NotNull String getFilePath() {
-        return dir == null ? filename : dir + "/" + filename;
+        return dir == null ? filename : dir + File.separator + filename;
     }
 
     @Override
     public @NotNull String getDataPath() {
-        return dir == null ? plugin.getDataFolder().toString() : plugin.getDataFolder() + "/" + dir;
+        return dir == null ? plugin.getDataFolder().toString() : plugin.getDataFolder() + File.separator + dir;
     }
 
     @Override
@@ -91,6 +90,7 @@ public class ConfigFile implements Config {
         try {
             this.config.save(file);
         } catch (IOException e) {
+            plugin.getLogger().severe("An error occurred while saving the config file: " + this.filename);
             e.printStackTrace();
         }
     }
