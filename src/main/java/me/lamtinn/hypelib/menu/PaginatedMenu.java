@@ -45,7 +45,7 @@ public abstract class PaginatedMenu extends Menu {
         int endIndex = Math.min(startIndex + items, getDataSize());
 
         for (int i = startIndex; i < endIndex; i++) {
-            loop(data.get(i), slots.get(i - startIndex));
+            this.loop(data.get(i), slots.get(i - startIndex));
         }
     }
 

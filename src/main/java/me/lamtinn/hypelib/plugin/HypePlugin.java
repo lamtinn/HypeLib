@@ -5,6 +5,7 @@ import me.lamtinn.hypelib.action.ActionManager;
 import me.lamtinn.hypelib.command.CommandManager;
 import me.lamtinn.hypelib.config.ConfigFile;
 import me.lamtinn.hypelib.config.ConfigManager;
+import me.lamtinn.hypelib.event.HypeEvent;
 import me.lamtinn.hypelib.task.scheduler.Scheduler;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
@@ -20,6 +21,7 @@ import org.jetbrains.annotations.Nullable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
@@ -73,6 +75,19 @@ public class HypePlugin extends BukkitPlugin {
 
     public void disable() {
         this.getPluginLoader().disablePlugin(this);
+    }
+
+    public void registerEvent(@NotNull final HypeEvent<?> event) {
+        this.registerListener(event);
+    }
+
+    public <T extends Event> void registerEvent(@NotNull final Class<T> eventClass, final Consumer<T> consumer) {
+        this.registerEvent(new HypeEvent<T>() {
+            @Override
+            public void onEvent(T event) {
+                consumer.accept(event);
+            }
+        });
     }
 
     public void registerCommand(@NotNull final Command command) {
