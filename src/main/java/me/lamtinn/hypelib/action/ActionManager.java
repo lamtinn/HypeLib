@@ -3,6 +3,7 @@ package me.lamtinn.hypelib.action;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.lamtinn.hypelib.action.annotation.Identifiers;
 import me.lamtinn.hypelib.action.impl.*;
+import me.lamtinn.hypelib.object.ReplacementPackage;
 import me.lamtinn.hypelib.plugin.HypePlugin;
 import me.lamtinn.hypelib.task.scheduler.Scheduler;
 import org.bukkit.entity.Player;
@@ -42,7 +43,7 @@ public class ActionManager {
         this.regex = "\\" + first + "(.+?)\\" + second;
     }
 
-    public void run(@NotNull final Player player, @NotNull final String str) {
+    public void run(@NotNull final Player player, @NotNull final String str, final ReplacementPackage replace) {
         if (!player.isOnline()) return;
 
         Action action = this.getAction(str);
@@ -54,8 +55,17 @@ public class ActionManager {
             String exe = PlaceholderAPI.setPlaceholders(player,
                     this.getExecutable(str)
             );
+            if (replace != null) exe = replace.replace(exe);
             action.execute(player, exe);
         });
+    }
+
+    public void run(@NotNull final Player player, @NotNull final String str) {
+        this.run(player, str, null);
+    }
+
+    public void run(@NotNull final Player player, @NotNull final List<String> actions, final ReplacementPackage replace) {
+        actions.forEach(a -> this.run(player, a, replace));
     }
 
     public void run(@NotNull final Player player, @NotNull final List<String> actions) {
