@@ -5,6 +5,7 @@ import me.lamtinn.hypelib.action.ActionManager;
 import me.lamtinn.hypelib.command.CommandManager;
 import me.lamtinn.hypelib.config.ConfigFile;
 import me.lamtinn.hypelib.config.ConfigManager;
+import me.lamtinn.hypelib.dependency.LibraryLoader;
 import me.lamtinn.hypelib.task.scheduler.Scheduler;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
@@ -41,6 +42,7 @@ public class HypePlugin extends BukkitPlugin {
     @Override
     public final void onLoad() {
         plugin = this;
+        LibraryLoader.loadAll(this);
         super.onLoad();
     }
 
