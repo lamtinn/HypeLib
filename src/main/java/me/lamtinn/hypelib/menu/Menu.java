@@ -7,6 +7,7 @@ import me.lamtinn.hypelib.menu.events.MenuDragEvent;
 import me.lamtinn.hypelib.menu.events.MenuOpenEvent;
 import me.lamtinn.hypelib.menu.interfaces.HMenu;
 import me.lamtinn.hypelib.menu.models.Button;
+import me.lamtinn.hypelib.object.PlayerObject;
 import me.lamtinn.hypelib.utils.AdventureUtils;
 import me.lamtinn.hypelib.utils.ValueUtils;
 import org.bukkit.Bukkit;
@@ -180,6 +181,10 @@ public abstract class Menu extends HMenu implements InventoryHolder {
         target.openInventory(this.inventory);
 
         this.updateTask = new MenuUpdateTask(this);
+    }
+
+    public <T extends PlayerObject> void open(final T player) {
+        this.open(player.getPlayer());
     }
 
     public void close() {

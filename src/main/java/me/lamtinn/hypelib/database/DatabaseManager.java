@@ -14,7 +14,7 @@ public class DatabaseManager {
         this.credentials = connector.getCredentials();
     }
 
-    public void init(@NotNull final HypePlugin plugin) {
+    public <T extends HypePlugin> void init(@NotNull final T plugin) {
         connector.connect();
         connector.setupDatabase();
         plugin.registerProvider(Connector.class, this.connector);

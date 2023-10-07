@@ -17,7 +17,7 @@ public final class ConfigManager {
     private final HypePlugin plugin;
     private final Map<String, ConfigFile> configs;
 
-    public ConfigManager(@NotNull final HypePlugin plugin) {
+    public <T extends HypePlugin> ConfigManager(@NotNull final T plugin) {
         this.plugin = plugin;
         this.configs = new HashMap<>();
     }

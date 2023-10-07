@@ -19,14 +19,14 @@ public class ConfigFile implements Config {
     private FileConfiguration config;
     private File file;
 
-    public ConfigFile(final HypePlugin plugin, @NotNull final String filename, @Nullable final String dir) {
+    public <T extends HypePlugin> ConfigFile(final T plugin, @NotNull final String filename, @Nullable final String dir) {
         this.plugin = plugin;
         this.filename = filename;
         this.name = filename.replace(".yml", "");
         this.dir = dir;
     }
 
-    public ConfigFile(final HypePlugin plugin, @NotNull final String filename) {
+    public <T extends HypePlugin> ConfigFile(final T plugin, @NotNull final String filename) {
         this(plugin, filename, null);
     }
 
