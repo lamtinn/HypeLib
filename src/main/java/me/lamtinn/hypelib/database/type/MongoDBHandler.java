@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public abstract class MongoDBHandler extends MongoConnector {
 
-    private MongoDatabase db;
+    protected MongoDatabase db;
 
     public MongoDBHandler(@NotNull DatabaseCredentials credentials) {
         super("MongoDB", credentials);
