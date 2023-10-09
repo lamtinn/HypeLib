@@ -1,7 +1,9 @@
 package me.lamtinn.hypelib.database.type;
 
+import com.mongodb.ServerApi;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
+import com.mongodb.ServerApiVersion;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -36,14 +38,20 @@ public abstract class MongoDBHandler extends MongoConnector {
             throw new RuntimeException("MongoDB connection string is empty. Please fill it in config.yml!");
         }
 
-        ConnectionString connectionString = new ConnectionString(str);
+        ServerApi serverApi = ServerApi.builder()
+                .version(ServerApiVersion.V1)
+                .build();
+
         final MongoClientSettings settings = MongoClientSettings.builder()
-                .applyConnectionString(connectionString)
-                .applicationName("hpyelib_mongo")
+                .applyConnectionString(new ConnectionString(str))
+                .serverApi(serverApi)
+                .applicationName("hypelib_mongo")
                 .build();
 
         this.mongo = MongoClients.create(settings);
+
         this.db = mongo.getDatabase(getCredentials().getDatabase());
+        this.db.runCommand(new Document("ping", 1));
 
         AdventureUtils.consoleMessage("{prefix} <green>Successfully connected to MySQL database!");
     }

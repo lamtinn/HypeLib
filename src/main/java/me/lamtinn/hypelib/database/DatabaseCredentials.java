@@ -1,6 +1,7 @@
 package me.lamtinn.hypelib.database;
 
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -9,6 +10,11 @@ public class DatabaseCredentials {
     @NotNull
     public static DatabaseCredentials of(@NotNull final ConfigurationSection section) {
         return new DatabaseCredentials(section);
+    }
+
+    @NotNull
+    public static DatabaseCredentials of(@NotNull final FileConfiguration config, @NotNull String path) {
+        return DatabaseCredentials.of(config.getConfigurationSection(path));
     }
 
     private final ConfigurationSection section;

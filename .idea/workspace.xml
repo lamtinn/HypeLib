@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8d3da899-2539-465a-b326-142647f39815" name="Changes" comment="Update v1.1.4&#10;- Add MavenDependency" />
+    <list default="true" id="8d3da899-2539-465a-b326-142647f39815" name="Changes" comment="Update v1.1.4">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/database/DatabaseCredentials.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/lamtinn/hypelib/database/DatabaseCredentials.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -258,7 +261,15 @@
       <option name="project" value="LOCAL" />
       <updated>1696607123574</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Update v1.1.4">
+      <option name="closed" value="true" />
+      <created>1696690364676</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1696690364676</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -273,6 +284,7 @@
     <MESSAGE value="Update v1.1.2&#10;- Hot fix" />
     <MESSAGE value="Update v1.1.3&#10;- Add ReplacementPackage (useful for data)" />
     <MESSAGE value="Update v1.1.4&#10;- Add MavenDependency" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update v1.1.4&#10;- Add MavenDependency" />
+    <MESSAGE value="Update v1.1.4" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update v1.1.4" />
   </component>
 </project>
